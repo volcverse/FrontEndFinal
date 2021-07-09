@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState , useEffect }from 'react';
 import { Input, Button, Form } from 'antd';
 import axios from 'axios'
 import { Upload, message} from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { UploadOutlined } from '@ant-design/icons';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { serverUrl } from '../../config';
 
 var _THIS;
@@ -49,7 +50,7 @@ export default class ChangeStuInfo extends React.Component {
     this.setState({
       username: name,
       psw: passw,
-      type: tp
+      type: tp,
     })
     _THIS=this;
   }
@@ -67,6 +68,7 @@ export default class ChangeStuInfo extends React.Component {
             imageUrl:info.file.response.info,
             loading: false,
           }),
+          alert('添加成功！')
         );
         console.log(info);
       }
@@ -99,7 +101,10 @@ export default class ChangeStuInfo extends React.Component {
                         listType="picture-card"
                         className="file-uploader"
                         showUploadList={false}
-                        action="/api/UpPhoto"
+                        action="/api/UpPhotoStu"
+                        data={file => ({ // data里存放的是接口的请求参数
+                          id: _THIS.state.username,
+                        })}
                         beforeUpload={beforeUpload}
                         onChange={info => this.handleChange(info)}>
                         {imageUrl ? <img src={serverUrl+imageUrl} alt="file" style={{ width: '100%' }} /> : uploadButton}
@@ -163,7 +168,8 @@ const transformFormData = (obj) => {
             }
           ).then((response) => 
             {
-                alert('修改成功！');
+                
+                  alert('修改成功！');
                 
           })
 }
