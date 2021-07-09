@@ -20,6 +20,7 @@ import ChangeAdmInfo from './ChangeAdmInfo'
 import FindCourse from './FindCourse'
 import ApplicationDetail from './ApplicationDetail'
 import ManagerChoose from './ManagerChoose'
+import ScoreApplication from './ScoreApplication'
 
 import SiderDemo from "./Navi/Navi";
 import SiderDemo2 from "./Navi/Navi2";
@@ -109,7 +110,10 @@ class ManagerCenter extends React.Component {
               系统管理
               <Link to={{ pathname: '/ManagerCenter/SystemManagement', state: { username: this.state.username, psw: this.state.psw } }}></Link>
             </Menu.Item>
-
+            <Menu.Item key="7" icon={<CloudOutlined />}>
+              分数修改申请
+              <Link to={{ pathname: '/ManagerCenter/ScoreApplication', state: { username: this.state.username, psw: this.state.psw } }}></Link>
+            </Menu.Item>
           </Menu>
         </Sider>
 
@@ -135,6 +139,9 @@ class ManagerCenter extends React.Component {
                 <Route path="/ManagerCenter/ClassroomInfo/DrawerForm1" component={DrawerForm1}></Route>
                 
                 <Route path="/ManagerCenter/ManagerChoose" component={ManagerChoose}></Route>
+                
+                <Route path="/ManagerCenter/ScoreApplication" component={ScoreApplication}></Route>
+
                 <Route path="/ManagerCenter/ClassroomInfo" component={SiderDemo}></Route>
                 <Route path="/ManagerCenter/ArrangeCourse" component={SiderDemo2}></Route>
                 <Route path="/ManagerCenter/TimeTableDisplay" component={SiderDemo3}></Route>

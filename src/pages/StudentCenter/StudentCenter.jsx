@@ -11,6 +11,7 @@ import StuChangePSW from './StuChangePSW'
 import AllCourse from './AllCourse'
 import CourseResource from './CourseResource'
 import Assignment from './Assignment'
+import MyAssignment from './MyAssignment'
 import Quiz from './Quiz'
 import HWanalysis from './HWanalysis'
 import PersonalResource from './PersonalResource'
@@ -101,6 +102,7 @@ class StudentCenter extends React.Component {
               选课中心
               <Link to={{ pathname: '/StudentCenter/ChooseCourse', props: { username: this.state.username, psw: this.state.psw, type: this.state.type } }}></Link>
             </Menu.Item>
+      
             <Menu.Item key="4" icon={<HighlightOutlined />}>
               <Link to={{ pathname: '/StudentCenter/testcenter_stu', state: { username: this.state.username, psw: this.state.psw, type: this.state.type } }}>
                 在线测验
@@ -145,6 +147,7 @@ class StudentCenter extends React.Component {
                 <Route path="/StudentCenter/AllCourse" component={AllCourse}></Route>
                 <Route path="/StudentCenter/CourseResource" component={CourseResource}></Route>
                 <Route path="/StudentCenter/Assignment" component={Assignment}></Route>
+                <Route path="/StudentCenter/MyAssignment" component={MyAssignment}></Route>
                 <Route path="/StudentCenter/Quiz" component={Quiz}></Route>
                 <Route path="/StudentCenter/Grade" component={Grade}></Route>
                 <Route path="/StudentCenter/PersonalResource" component={PersonalResource}></Route>
