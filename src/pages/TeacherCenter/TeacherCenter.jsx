@@ -19,6 +19,7 @@ import GradeAnalysis from './GradeAnalysis'
 import Quizanalysis from './Quizanalysis'
 import HWanalysis from './HWanalysis'
 import Studentanalysis from './Studentanalysis'
+import Analysischarts from './Analysischarts'
 
 import SiderDemo3 from "../ManagerCenter/Navi/Navi3";
 
@@ -146,6 +147,7 @@ class TeacherCenter extends React.Component {
                 <Route path="/TeacherCenter/Quizanalysis" component={Quizanalysis}></Route>
                 <Route path="/TeacherCenter/HWanalysis" component={HWanalysis}></Route>
                 <Route path="/TeacherCenter/Studentanalysis" component={Studentanalysis}></Route>
+                <Route path="/TeacherCenter/Analysischarts" component={Analysischarts}></Route>
 
                 <Route path="/TeacherCenter/TimeTableDisplay" component={SiderDemo3}></Route>
 

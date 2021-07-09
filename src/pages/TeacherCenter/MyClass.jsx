@@ -231,16 +231,16 @@ export default class MyClass extends Component {
                                 </a>
                         </Popconfirm>
 
-                        <Link to={{ pathname: '/TeacherCenter/CourseResource', state: { username: this.state.username, psw: this.state.psw } }}>
+                        <Link to={{ pathname: '/TeacherCenter/CourseResource', state: {classID:record.id,name:record.name, username: this.state.username, psw: this.state.psw } }}>
                             <a>资源管理</a>
                         </Link>
-                        <Link to={{ pathname: '/TeacherCenter/AddHW', state: { username: this.state.username, psw: this.state.psw } }}>
+                        <Link to={{ pathname: '/TeacherCenter/AddHW', state: {classID:record.id,name:record.name, username: this.state.username, psw: this.state.psw } }}>
                             <a>发布作业</a>
                         </Link>
                         <Link to={{ pathname: '/TeacherCenter/HWMarking', state: { username: this.state.username, psw: this.state.psw } }}>
                             <a>批改作业</a>
                         </Link>
-                        <Link to={{ pathname: '/TeacherCenter/Quiz', state: { username: this.state.username, psw: this.state.psw } }}>
+                        <Link to={{ pathname: '/TeacherCenter/Quiz', state: {classID:record.id,name:record.name, username: this.state.username, psw: this.state.psw } }}>
                             <a>课堂测验</a>
                         </Link>
                         <Popconfirm

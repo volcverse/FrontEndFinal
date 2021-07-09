@@ -1,156 +1,293 @@
-import { Column } from '@ant-design/charts';
-import { Descriptions,Table } from 'antd';
-import React, { Component } from 'react'
-import axios from 'axios';
+import React, { Component } from "react";
+import { Table, Button, Spin, Modal, Form, Input, Card } from "antd";
+import axios from "axios";
+import * as echarts from "echarts";
+import "./common.css";
 
+let _this = this;
+
+let chartDom;
+let myChart;
+let option;
 
 const columns = [
-    {
-        title: '名词',
-        dataIndex: 'num',
-        key: 'num',
-    },
-    {
-        title: '学生姓名',
-        dataIndex: 'name',
-        key: 'name',
-    },
-    {
-        title: '学生学号',
-        key: 'id',
-        dataIndex: 'id',
-    },
-    {
-        title: '成绩',
-        key: 'grade',
-        dataIndex: 'grade',
-    },
-    
+  {
+    title: "测试名称",
+    dataIndex: "Quiz_id",
+    key: "Quiz_id",
+  },
+  {
+    title: "测试成绩",
+    dataIndex: "Quiz_score",
+    key: "Quiz_score",
+  },
+  {
+    title: "测验标题",
+    dataIndex: "Quiz_title",
+    key: "content",
+  },
+  {
+    title: "测试内容",
+    dataIndex: "Quiz_content",
+    key: "Quiz_content",
+  },
+  {
+    title: "学号",
+    dataIndex: "Student_id",
+    key: "Quiz_content",
+  },
+  {
+    title: "教师号",
+    dataIndex: "Teacher_id",
+    key: "Teacher_id",
+  },
+  {
+    title: "班级号",
+    dataIndex: "Class_id",
+    key: "Class_id",
+  },
+  {
+    title: "测试时间",
+    dataIndex: "Quiz_time",
+    key: "Quiz_time",
+  },
+  {
+    title: "操作",
+    key: "action",
+    dataIndex: "action",
+    width: 200,
+    render: (text, record) => (
+      <span>
+        <Button type="primary" onClick={() => showGrade(record)} size="small">
+          查看分析结果
+        </Button>
+      </span>
+    ),
+  },
 ];
 
-const shuju = [
-    {
-        num:'1',
-        name:'张三',
-        id:'3190100001',
-        grade:'100',
-    },
-    {
-        num:'2',
-        name:'李四',
-        id:'3190100002',
-        grade:'99',
-    },
-    {
-        num:'3',
-        name:'王五',
-        id:'3190100003',
-        grade:'98',
-    },
-    {
-        num:'...',
-        name:'...',
-        id:'...',
-        grade:'...',
-    },
- ];
+const columnsRank = [
+  {
+    title: "排名",
+    dataIndex: "rankNumber",
+    key: "rankNumber",
+  },
+  {
+    title: "姓名",
+    dataIndex: "studentName",
+    key: "studentName",
+  },
+  {
+    title: "分数",
+    dataIndex: "Quiz_score",
+    key: "Quiz_score",
+  },
+];
 
-const DemoColumn: React.FC = () => {
-  var data = [
-    {
-      type: '60分以下',
-      sales: 4,
-    },
-    {
-      type: '60-70',
-      sales: 9,
-    },
-    {
-      type: '70-80',
-      sales: 12,
-    },
-    {
-      type: '80-90',
-      sales: 18,
-    },
-    {
-      type: '90-100',
-      sales: 8,
-    },
-    
-  ];
-  var config = {
-    data: data,
-    xField: 'type',
-    yField: 'sales',
-    label: {
-      position: 'middle',
-      style: {
-        fill: '#000',
-        opacity: 0.6,
-      },
-    },
-    columnWidthRatio: 0.4,
-    xAxis: {
-      label: {
-        autoHide: true,
-        autoRotate: false,
-      },
-    },
-    meta: {
-      type: { alias: '成绩分布' },
-      sales: { alias: '人数' },
-    },
-  };
-  
-  //class id  
-  /*
-  state = {
-    quiz:[],
-    loading:true,
-  }
-  async componentDidMount(){
-    //const res = await axios.get('http://localhost:8000/api/Analysischarts');
-    //console.log(res.data.assignment);
-    //console.log(res);
-    if(res.data.status === 200){
-    this.setState({
-        quiz: res.data.quiz,
-        loading:false,
-    })
-    }
-  }
-  */
-
-  return <space>
-
-  
-
-<span style={{ color: 'black', fontSize: '3em' }}> 成 绩 分 布</span>
-    <br></br><br></br><br></br><br></br>
-    
-    <Descriptions bordered >
-    <Descriptions.Item label="课程名">数据库系统</Descriptions.Item>
-    <Descriptions.Item label="平均分">78分</Descriptions.Item>
-    <Descriptions.Item label="上课人数">52人</Descriptions.Item>
-    <Descriptions.Item label="60分以下">4人</Descriptions.Item>
-    <Descriptions.Item label="60-70分">9人</Descriptions.Item>
-    <Descriptions.Item label="70-80分">12人</Descriptions.Item>
-
-    <Descriptions.Item label="80-90分">18人</Descriptions.Item>
-    <Descriptions.Item label="90-100">8人</Descriptions.Item>
-  </Descriptions>
-
-   
-  <br></br><br></br>
-  <Column {...config} />
-    <br></br><br></br>
-    <span style={{ color: 'black', fontSize: '2em' }}>学 生 成 绩 排 名</span>
-    <div>
-    <Table columns={columns} dataSource={shuju} />
-    </div>
-    <br></br><br></br><br></br></space>;
+const showGrade = (row) => {
+  _this.showModal(row.Student_id);
 };
 
+const layout = {
+  labelCol: { span: 4 },
+  wrapperCol: { span: 16 },
+};
 
-export default DemoColumn ;
+export default class Quiz extends Component {
+  state = {
+    userInfo: {},
+    classID: 0,
+    quiz: [],
+    loading: true,
+    className: "",
+    isModalVisible: false,
+    rank:[],
+    grade: {
+      student_name: "",
+      total_credit: 0,
+      average_score: 0,
+      gpa: 0,
+    },
+  };
+  componentDidMount() {
+    _this = this;
+    this.state.classID = this.props.location.state.classID;
+    this.setState({
+      className:this.props.location.state.className
+    })
+    chartDom = document.getElementById("chart");
+    myChart = echarts.init(chartDom);
+    myChart.showLoading();
+
+    let userInfo = sessionStorage.getItem("userInfo");
+    if (!userInfo) {
+      this.props.history.push({ pathname: "/LoginInterface" });
+    }
+    this.state.userInfo = JSON.parse(userInfo);
+
+    this.getData();
+  }
+
+  getData = () => {
+    this.setState({
+      loading: true,
+    });
+    axios
+      .get("http://localhost:8000/api/Quizanalysis", {
+        params: {
+          classID: this.state.classID,
+        },
+      })
+      .then((response) => {
+        if (response.data.status === 200) {
+          this.setState({
+            quiz: response.data.quiz,
+            rank:response.data.chart.rank,
+            loading: false,
+          });
+
+          this.chart(response.data.chart);
+          
+          myChart.hideLoading();
+        }
+      });
+  };
+
+  showModal = (id) => {
+    this.setState({
+      loading: true,
+    });
+    axios
+      .get("http://localhost:8000/api/GetGradeInfo", {
+        params: {
+          id: id,
+        },
+      })
+      .then((response) => {
+        if (response.data.status === 200) {
+          this.setState({
+            grade: response.data.grade,
+            loading: false,
+            isModalVisible: true,
+          });
+        }
+      });
+  };
+
+  handleOk = () => {
+    this.setState({
+      isModalVisible: false,
+    });
+  };
+
+  handleCancel = () => {
+    this.setState({
+      isModalVisible: false,
+    });
+  };
+
+  chart = (data) => {
+    option = {
+      title: {
+        text: "成绩分布",
+        subtext: "",
+        left: "center",
+      },
+      tooltip: {
+        trigger: "item",
+      },
+      legend: {
+        orient: "vertical",
+        left: "left",
+      },
+      series: [
+        {
+          name: "成绩分布",
+          type: "pie",
+          radius: "50%",
+          data: [
+            { value: data.level1, name: "60以下" },
+            { value: data.level2, name: "60-70" },
+            { value: data.level3, name: "71-80" },
+            { value: data.level4, name: "81-90" },
+            { value: data.level5, name: "91-100" },
+          ],
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: "rgba(0, 0, 0, 0.5)",
+            },
+          },
+        },
+      ],
+    };
+
+    option && myChart.setOption(option);
+  };
+
+  render() {
+    return (
+      <div>
+        <span style={{ color: "black", fontSize: "2em" }}>
+          {this.state.className} 课堂测验 {this.state.grade.student_name}
+        </span>
+        <br></br>
+        <br></br>
+
+        <br></br>
+        <br></br>
+        <Spin tips="加载中..." spinning={this.state.loading}>
+          <div className="analysis">
+            <Card title="成绩分布" className="chart-content">
+              <div id="chart"> </div>
+            </Card>
+
+            <div id="rank">
+              <Card title="成绩排名（前10）">
+                <div class="rank-content">
+                  <Table
+                    rowKey="3190100123"
+                    columns={columnsRank}
+                    dataSource={this.state.rank}
+                    pagination={false}
+                  />
+                </div>
+              </Card>
+            </div>
+          </div>
+
+          <Table
+            rowKey="Quiz_id"
+            columns={columns}
+            dataSource={this.state.quiz}
+          />
+        </Spin>
+
+        <Modal
+          title="查看分析结果"
+          cancelText="返回"
+          okText="确定"
+          visible={this.state.isModalVisible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+          <Form {...layout} name="control-hooks">
+            <Form.Item name="student_name" label="姓名">
+            {this.state.grade.student_name}
+            </Form.Item>
+            <Form.Item name="total_credit" label="总分">
+            {this.state.grade.total_credit} 
+            </Form.Item>
+            <Form.Item name="average_score" label="平均分">
+            {this.state.grade.average_score}
+            </Form.Item>
+            <Form.Item name="gpa" label="gpa">
+            {this.state.grade.gpa}
+            </Form.Item>
+          </Form>
+        </Modal>
+      </div>
+    );
+  }
+}
