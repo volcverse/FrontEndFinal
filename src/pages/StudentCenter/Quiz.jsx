@@ -86,9 +86,7 @@ export default class Quiz extends Component {
     this.state.className = this.props.location.state.name;
 
     let userInfo = sessionStorage.getItem("userInfo");
-    if (!userInfo) {
-      this.props.history.push({ pathname: "/LoginInterface" });
-    }
+    
     this.state.userInfo = JSON.parse(userInfo);
 
     this.getData();

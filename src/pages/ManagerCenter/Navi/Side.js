@@ -1,11 +1,13 @@
 import { Layout, Menu } from 'antd';
 import React, { Component } from 'react';
 import { Link, Route, Switch, Redirect } from 'react-router-dom'
+
 import { Icon } from '@ant-design/compatible';
 import SiderDemo from "./Navi";
 import SiderDemo2 from "./Navi2";
 import SiderDemo3 from "./Navi3";
-const { Header, Content, Sider } = Layout;
+import SiderDemo4 from "./new";
+const { Header, Content, Footer, Sider } = Layout;
 
 class Side extends Component{
 
@@ -44,6 +46,12 @@ class Side extends Component{
                                 <span className="nav-text">查询课表</span>
                             </Link>
                         </Menu.Item>
+                        <Menu.Item key="4" >
+                            <Link to="/Side/new">
+                                <Icon type="eye" />
+                                <span className="nav-text">教师查询课表</span>
+                            </Link>
+                        </Menu.Item>
                     </Menu>
                 </Sider>
 
@@ -60,6 +68,7 @@ class Side extends Component{
                                 <Route path="/Side/Navi" component={SiderDemo}></Route>
                                 <Route path="/Side/Navi2" component={SiderDemo2}></Route>
                                 <Route path="/Side/Navi3" component={SiderDemo3}></Route>
+                                <Route path="/Side/new" component={SiderDemo4}></Route>
                             </Switch>
                         </div>
                     </Content>

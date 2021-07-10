@@ -15,10 +15,12 @@ let codetable={
     "1002": "教室id已存在",
     "1003": "输入信息不合规！",
     "1004": "未查到匹配信息！",
+    "1005": "教室容量不得为负或者为零",
+    "1006": "教室位置已经存在",
     "2001": "您尚未排课，请点击自动排课按钮进行排课！",
     "2002": "在此时间段内无课程！",
     "2003": "排课资源不足，排课失败！",
-    "2004": "与其他课程时间冲突！",
+    "2004": "教室课程安排冲突！",
     "2005": "教师时间冲突！",
     "2006": "查无此课！",
     "3001": "您还未排课，请移至排课页面进行排课！",
@@ -264,7 +266,7 @@ const SiderDemo = () => {
         <Content style={{ margin: '-40px -10px', }}>
             <Breadcrumb style={{ margin: '12px 0' }}>
                 <Button type="primary" style={{margin: '0 100px'}}>
-                    <Link to="/ManagerCenter/ClassroomInfo/DrawerForm1">
+                    <Link to="/Side/Navi/DrawerForm1">
                         添加教室
                     </Link>
                 </Button>

@@ -14,10 +14,12 @@ let codetable={
     "1002": "教室id已存在",
     "1003": "输入信息不合规！",
     "1004": "未查到匹配信息！",
+    "1005": "教室容量不得为负或者为零",
+    "1006": "教室位置已经存在",
     "2001": "您尚未排课，请点击自动排课按钮进行排课！",
     "2002": "在此时间段内无课程！",
     "2003": "排课资源不足，排课失败！",
-    "2004": "与其他课程时间冲突！",
+    "2004": "教室课程安排冲突！",
     "2005": "教师时间冲突！",
     "2006": "查无此课！",
     "3001": "您还未排课，请移至排课页面进行排课！",
@@ -65,7 +67,7 @@ const SiderDemo3 = () => {
                 switch (i){
                     case 0:
                         afterSearch.push({
-                            span:"1、2节",
+                            span:"一",
                             key: i.toString(),
                             Mon: res.data.data[i].Mon,
                             Tue: res.data.data[i].Tue,
@@ -78,7 +80,7 @@ const SiderDemo3 = () => {
                         break;
                     case 1:
                         afterSearch.push({
-                            span:"3、4、5节",
+                            span:"二",
                             key: i.toString(),
                             Mon: res.data.data[i].Mon,
                             Tue: res.data.data[i].Tue,
@@ -91,7 +93,7 @@ const SiderDemo3 = () => {
                         break;
                     case 2:
                         afterSearch.push({
-                            span:"6、7、8节",
+                            span:"三",
                             key: i.toString(),
                             Mon: res.data.data[i].Mon,
                             Tue: res.data.data[i].Tue,
@@ -104,7 +106,7 @@ const SiderDemo3 = () => {
                         break;
                     case 3:
                         afterSearch.push({
-                            span:"9、10节",
+                            span:"四",
                             key: i.toString(),
                             Mon: res.data.data[i].Mon,
                             Tue: res.data.data[i].Tue,
@@ -117,7 +119,7 @@ const SiderDemo3 = () => {
                         break;
                     case 4:
                         afterSearch.push({
-                            span:"10、11、12节",
+                            span:"五",
                             key: i.toString(),
                             Mon: res.data.data[i].Mon,
                             Tue: res.data.data[i].Tue,
@@ -327,7 +329,7 @@ const SiderDemo3 = () => {
                             {/*<Breadcrumb.Item>Administrator</Breadcrumb.Item>*/}
 
                             <Space style={{float:'right', paddingRight:'10%'}} direction="vertical">
-                                <Search placeholder="输入教师或教室ID" onSearch={OnSearch3} enterButton />
+                                <Search placeholder="input teacher/classroom" onSearch={OnSearch3} enterButton />
                             </Space>
                             <Button style={{ margin: '0 200px' }} type="primary" onClick={onPrint}>打印课表</Button>
                         </Breadcrumb>

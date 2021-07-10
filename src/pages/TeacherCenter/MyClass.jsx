@@ -91,6 +91,7 @@ export default class MyClass extends Component {
         this.props.history.push({ pathname: '/TeacherCenter/EditLesson', state: { username: this.state.username, psw: this.state.psw, course_ID: cid, time: ctime } });
     }
 
+
     requestDeleteSend(record) {
         const _this = this;
 
@@ -242,6 +243,9 @@ export default class MyClass extends Component {
                         </Link>
                         <Link to={{ pathname: '/TeacherCenter/Quiz', state: {classID:record.id,name:record.name, username: this.state.username, psw: this.state.psw } }}>
                             <a>课堂测验</a>
+                        </Link>
+                        <Link to={{ pathname: '/TeacherCenter/TeacherCourseInfo', state: {classID:record.id,name:record.name, username: this.state.username, psw: this.state.psw } }}>
+                        <a>结果查看</a>
                         </Link>
                         <Popconfirm
                             title="您确定要删除此课程吗"

@@ -21,7 +21,7 @@ import HWanalysis from './HWanalysis'
 import Studentanalysis from './Studentanalysis'
 import Analysischarts from './Analysischarts'
 
-import SiderDemo3 from "../ManagerCenter/Navi/Navi3";
+import SiderDemo4 from "./new";
 
 import testipublish from './testcenter_tea/testpublish';
 import quesmanager from './testcenter_tea/onlinetest_teacher';
@@ -29,6 +29,8 @@ import testexam from './testcenter_tea/testexam'
 import testintroduce1 from './testcenter_tea/testpaper1/testintroduce1'
 import testquestions1 from './testcenter_tea/testpaper1/testquestions1'
 import testrank1 from './testcenter_tea/testpaper1/testrank1'
+
+import TeacherCourseInfo from './TeacherCourseInfo'
 
 import {
   BarChartOutlined,
@@ -149,7 +151,7 @@ class TeacherCenter extends React.Component {
                 <Route path="/TeacherCenter/Studentanalysis" component={Studentanalysis}></Route>
                 <Route path="/TeacherCenter/Analysischarts" component={Analysischarts}></Route>
 
-                <Route path="/TeacherCenter/TimeTableDisplay" component={SiderDemo3}></Route>
+                <Route path="/TeacherCenter/TimeTableDisplay" component={SiderDemo4}></Route>
 
                 <Route exact path="/TeacherCenter/testcenter_tea" component={testipublish} />
                 <Route path="/TeacherCenter/testcenter_tea/testpublish" component={testipublish} />
@@ -159,6 +161,8 @@ class TeacherCenter extends React.Component {
                 <Route path="/TeacherCenter/testcenter_tea/testpaper1/testquestions1" component={testquestions1} />
                 <Route path="/TeacherCenter/testcenter_tea/testpaper1/testintroduce1" component={testintroduce1} />
                 <Route path="/TeacherCenter/testcenter_tea/testpaper1/testrank1" component={testrank1} />
+
+                <Route path="/TeacherCenter/TeacherCourseInfo" component={TeacherCourseInfo}></Route>
 
                 <Redirect to="/TeacherCenter/TeacherInfo"></Redirect>
               </Switch>

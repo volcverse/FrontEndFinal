@@ -168,9 +168,7 @@ export default class PersonalResource extends Component {
     });
 
     let userInfo = sessionStorage.getItem("userInfo");
-    if (!userInfo) {
-      this.props.history.push({ pathname: "/LoginInterface" });
-    }
+    
     this.state.userInfo = JSON.parse(userInfo);
   }
 
