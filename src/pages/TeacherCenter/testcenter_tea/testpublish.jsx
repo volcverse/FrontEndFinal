@@ -65,7 +65,7 @@ function bac(tid){
       datasourcetestpublish=[];
       for(let i=0;i<=texamid.length-1;i++){
         datasourcetestpublish.push({
-          tid:i,
+          ttid:i,
           paper_id:texamid[i]['paper_id'],
           teacher_id:texamid[i]['teacher_id'],
           course_id:texamid[i]['course_id'],
@@ -77,10 +77,10 @@ function bac(tid){
       return 1;
     })
 }
-class asd extends React.Component {
-  constructor(props){
+export default class asd extends React.Component {
+  componentWillMount(){
 
-  super(props);
+
   
   this.state = {
     current:'mail',
@@ -90,7 +90,7 @@ class asd extends React.Component {
     columns  :[
       {
         title: '',
-        dataIndex: 'tid',
+        dataIndex: 'ttid',
         width:'100%',
         render:text=>
         <Card title={<div><DesktopOutlined />  {datasourcetestpublish[text]['paper_id']} {datasourcetestpublish[text]['paper_name']}</div>}  style={{ marginRight: 0,marginLeft: 0 }}>
@@ -99,6 +99,17 @@ class asd extends React.Component {
       },
     ],
   };
+  }
+  componentDidMount() {
+    
+
+    
+    this.timer = setInterval(function () {
+      this.setState({
+        columns:this.state.columns,
+      });
+    }.bind(this), 100);
+  
   }
   showModal = () => {
     this.setState({
@@ -126,12 +137,13 @@ class asd extends React.Component {
     let paper_id = values['paper_id'];
     let course_id = values['course_id'];
     let teacher_id = values['teacher_id'];
+    let exam_name=values['exam_name'];
     // 拼接考试时间
     let start_time = exam_date + " " + exam_start_time;
     let end_time = exam_date + " " + exam_end_time;
     let state ='未开始';
     // 组合url参数
-    let exam_params = paper_id + "/" + course_id + "/" + teacher_id + "/" +
+    let exam_params = paper_id + "/" + course_id + "/" + teacher_id + "/" +exam_name+"/"+
       start_time + "/" + end_time + "/" + state;
     axios.get('http://127.0.0.1:8000/exam/create/'+exam_params, {
       headers:{'content-type':'application/x-www-form-urlencoded'},
@@ -163,19 +175,22 @@ class asd extends React.Component {
                   footer={null}
                 >
                   <Form style={{margin: '0 20% 0 20%'}} onFinish={this.exam_create}>
-                    <Form.Item label="试卷编号" style={{margin: '0', width:'100%'}} name="paper_id">
+                    <Form.Item label="试卷编号" style={{margin: '0', width:'100%'}} rules={[{required: true,}]} name="paper_id">
                       <Input placeholder="请输入试卷编号"></Input>
                     </Form.Item><br></br>
-                    <Form.Item label="课程编号" style={{margin: '0', width:'100%'}} name="course_id">
+                    <Form.Item label="课程编号" style={{margin: '0', width:'100%'}} rules={[{required: true,}]} name="course_id">
                       <Input placeholder="请输入课程编号"></Input>
                     </Form.Item><br></br>
-                    <Form.Item label="教师编号" style={{margin: '0', width:'100%'}} name="teacher_id">
+                    <Form.Item label="教师编号" style={{margin: '0', width:'100%'}} rules={[{required: true,}]} name="teacher_id">
                       <Input placeholder="请输入教师编号"></Input>
                     </Form.Item><br></br>
-                    <Form.Item label="考试日期" style={{margin: '0', width:'150%'}} name="exam_date">
+                    <Form.Item label="考试名称" style={{margin: '0', width:'100%'}} rules={[{required: true,}]} name="exam_name">
+                      <Input placeholder="请输入考试名称"></Input>
+                    </Form.Item><br></br>
+                    <Form.Item label="考试日期" style={{margin: '0', width:'150%'}} rules={[{required: true,}]} name="exam_date">
                       <DatePicker placeholder="请选择考试日期"></DatePicker>
                     </Form.Item><br></br>
-                    <Form.Item label="考试时段" style={{margin: '0', width:'100%'}} name="exam_time_range">
+                    <Form.Item label="考试时段" style={{margin: '0', width:'100%'}} rules={[{required: true,}]}name="exam_time_range">
                       <TimePicker.RangePicker placeholder="请选择考试时段"></TimePicker.RangePicker>
                     </Form.Item>
                     <Form.Item>
@@ -196,4 +211,4 @@ class asd extends React.Component {
 
 
 }
-export default asd;
+
