@@ -70,7 +70,7 @@ class introdu extends React.Component {
               if(res.data.length==0){
                 if(kkk=='进行中'){
                   this.setState({tstart:false});
-                  this.setState({bable:false});
+                  this.setState({bable:true});
                 }
                 if(kkk=='未开始'){
                   this.setState({tstart:true});

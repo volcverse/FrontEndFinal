@@ -86,7 +86,18 @@ class introdu extends React.Component {
           }
     })
   }
+  componentDidMount() {
+    
 
+    
+    this.timer = setInterval(function () {
+      this.setState({
+        columns:this.state.columns,
+      });
+
+    }.bind(this), 100);
+  
+  }
   handleClick = e => {
     console.log('click ', e);
     this.setState({ current: e.key });
