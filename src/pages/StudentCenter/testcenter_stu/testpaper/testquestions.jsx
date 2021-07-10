@@ -186,7 +186,7 @@ let judgenum=0;
 class StudentCenter extends React.Component {
   constructor(props) {
     super(props);
-    console.log(78910);
+    
     this.state = {
       examinfo:examinfo,
       sid:this.props.location.state.username,
@@ -194,6 +194,7 @@ class StudentCenter extends React.Component {
     current:'mail',
     value:0,
     handupabl:handupabl,
+    
     y:abc(this.props.location.state.eid),
     columns : [
       {
@@ -374,8 +375,10 @@ class StudentCenter extends React.Component {
     return null;
   }
   handuppaper=()=>{
+    this.state.examinfo=examinfo;
+    console.log(this.state.sid);
     axios
-              .get('http://127.0.0.1:8000/addanswerpaper/'+this.state.examinfo[0]['paper_id']+'/'+this.state.examinfo[0]['exam_id']+'/3190100666',
+              .get('http://127.0.0.1:8000/addanswerpaper/'+this.state.examinfo[0]['paper_id']+'/'+this.state.examinfo[0]['exam_id']+'/'+this.state.sid,
                     { 
                       headers:{'content-type':'application/x-www-form-urlencoded'},
             
@@ -385,7 +388,7 @@ class StudentCenter extends React.Component {
               })
     for(let i=0;i<choosenum;i++){
       axios
-              .get('http://127.0.0.1:8000/addanswerchoose/'+this.state.examinfo[0]['paper_id']+'/'+this.state.examinfo[0]['exam_id']+'/3190100666/'+datasourcechoose[i]['cid']+'/'+datasourcechoose[i]['select']+'/'+datasourcechoose[i]['value'],
+              .get('http://127.0.0.1:8000/addanswerchoose/'+this.state.examinfo[0]['paper_id']+'/'+this.state.examinfo[0]['exam_id']+'/'+this.state.sid+'/'+datasourcechoose[i]['cid']+'/'+datasourcechoose[i]['select']+'/'+datasourcechoose[i]['value'],
                     { 
                       headers:{'content-type':'application/x-www-form-urlencoded'},
             
@@ -394,7 +397,7 @@ class StudentCenter extends React.Component {
                     console.log('修改选择题');
                     console.log(this.state.examinfo);
                     axios.
-                    get('http://127.0.0.1:8000/choosecompare/'+this.state.examinfo[0]['paper_id']+'/'+datasourcechoose[i]['cid']+'/3190100666/'+this.state.examinfo[0]['exam_id'],
+                    get('http://127.0.0.1:8000/choosecompare/'+this.state.examinfo[0]['paper_id']+'/'+datasourcechoose[i]['cid']+'/'+this.state.sid+'/'+this.state.examinfo[0]['exam_id'],
                     {
                       headers:{'content-type':'application/x-www-form-urlencoded'},
                     }).then(()=>{
@@ -404,7 +407,7 @@ class StudentCenter extends React.Component {
     }
     for(let i=0;i<judgenum;i++){
       axios
-              .get('http://127.0.0.1:8000/addanswerjudge/'+this.state.examinfo[0]['paper_id']+'/'+this.state.examinfo[0]['exam_id']+'/3190100666/'+datasourcejudge[i]['jid']+'/'+datasourcejudge[i]['select']+'/'+datasourcejudge[i]['value'],
+              .get('http://127.0.0.1:8000/addanswerjudge/'+this.state.examinfo[0]['paper_id']+'/'+this.state.examinfo[0]['exam_id']+'/'+this.state.sid+'/'+datasourcejudge[i]['jid']+'/'+datasourcejudge[i]['select']+'/'+datasourcejudge[i]['value'],
                     { 
                       headers:{'content-type':'application/x-www-form-urlencoded'},
             
@@ -412,7 +415,7 @@ class StudentCenter extends React.Component {
                   ).then((res)=>{
                     console.log('修改判断题');
                     axios.
-                    get('http://127.0.0.1:8000/judgecompare/'+this.state.examinfo[0]['paper_id']+'/'+datasourcejudge[i]['jid']+'/3190100666/'+this.state.examinfo[0]['exam_id'],
+                    get('http://127.0.0.1:8000/judgecompare/'+this.state.examinfo[0]['paper_id']+'/'+datasourcejudge[i]['jid']+'/'+this.state.sid+'/'+this.state.examinfo[0]['exam_id'],
                     {
                       headers:{'content-type':'application/x-www-form-urlencoded'},
                     }).then(()=>{
@@ -467,7 +470,7 @@ class StudentCenter extends React.Component {
         <Layout className="site-layout" style={{color:'white', marginLeft: 200 }}>
             
             <div style={{ color:'black', fontSize: '2.0em', marginLeft: 20 }}>试卷编号：{this.state.examinfo[0]['paper_id']}</div>
-            <Button type='primary' disabled={aable} onClick={this.handuppaper} ><Link to={{pathname: "/StudentCenter/testcenter_stu",state:{username:this.state.sid}}}>交卷</Link></Button>
+            <Button type='primary' disabled={aable} onClick={this.handuppaper} ><Link to={{pathname:"/StudentCenter/testcenter_stu/testpaper/",state:{eid:this.state.eid,username:this.state.sid}}}>交卷</Link></Button>
             <Divider />
             <Tabs defaultActiveKey="1" >
             <TabPane tab={<div><OrderedListOutlined />选择题</div>} key="1" id="   QB_view">

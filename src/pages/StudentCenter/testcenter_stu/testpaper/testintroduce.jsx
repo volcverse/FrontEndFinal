@@ -22,9 +22,10 @@ import {
 const { Header, Content, Footer, Sider } = Layout;
 
 class introdu extends React.Component {
-
+  
   constructor(props) {
     super(props);
+    console.log(this.props.location.state.username);
     this.state = {
     tstart:true,
     bable:true,
@@ -34,7 +35,7 @@ class introdu extends React.Component {
     examinfo:[{'start_time':0,'end_time':0,'state':'—— ——'}],
     score:0
     };
-
+    console.log(this.state.sid);
     axios
     .get('http://127.0.0.1:8000/examstateupdate',
       { 
@@ -60,7 +61,7 @@ class introdu extends React.Component {
 
 
           axios
-            .get('http://127.0.0.1:8000/answerpaper/query/3190100666/'+this.state.eid,
+            .get('http://127.0.0.1:8000/answerpaper/query/'+this.state.sid+'/'+this.state.eid,
               { 
                 headers:{'content-type':'application/x-www-form-urlencoded'},
 
@@ -99,7 +100,7 @@ class introdu extends React.Component {
     })
     
     axios
-    .get('http://127.0.0.1:8000/answerpaper/query/3190100666/'+this.state.eid,
+    .get('http://127.0.0.1:8000/answerpaper/query/'+this.state.sid+'/'+this.state.eid,
           { 
             headers:{'content-type':'application/x-www-form-urlencoded'},
   
