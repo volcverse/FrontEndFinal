@@ -22,19 +22,6 @@ import {
 const { Header, Content, Footer, Sider } = Layout;
 
 
-const columns = [
-    {
-      title: '学号',
-      dataIndex: 'stid',
-      key: 'age',
-    },
-    {
-      title: '分数',
-      dataIndex: 'score',
-      key: 'address',
-      defaultSortOrder: 'descend',
-    }
-  ];
   
   let datatestrank = [];
 
@@ -51,6 +38,19 @@ class introdu extends React.Component {
     current:'mail',
     ttdata:[{'exam_id':0}],
     examinfo:[{'exam_id':0}],
+    columns : [
+      {
+        title: '学号',
+        dataIndex: 'stid',
+        key: 'age',
+      },
+      {
+        title: '分数',
+        dataIndex: 'score',
+        key: 'address',
+        defaultSortOrder: 'descend',
+      }
+    ],
     };
     axios
     .get('http://127.0.0.1:8000/exam/query/'+this.state.pid,
@@ -75,6 +75,7 @@ class introdu extends React.Component {
           this.setState({ttdata:res.data});
           console.log(this.state.ttdata)
           datatestrank=[];
+          datatestrank.length=0;
           for(let i=0;i<=res.data.length-1;i++){
             datatestrank.push({
               tid:i,
@@ -85,7 +86,17 @@ class introdu extends React.Component {
           }
     })
   }
+  componentDidMount() {
+    
 
+    
+    this.timer = setInterval(function () {
+      this.setState({
+        columns:this.state.columns,
+      });
+    }.bind(this), 100);
+  
+  }
   handleClick = e => {
     console.log('click ', e);
     this.setState({ current: e.key });
@@ -136,7 +147,7 @@ class introdu extends React.Component {
             
             <Divider />
             
-            <Table style={{marginLeft: 20,marginRight:20 }} columns={columns} dataSource={datatestrank} />
+            <Table style={{marginLeft: 20,marginRight:20 }} columns={this.state.columns} dataSource={datatestrank} />
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
         </Layout>
         

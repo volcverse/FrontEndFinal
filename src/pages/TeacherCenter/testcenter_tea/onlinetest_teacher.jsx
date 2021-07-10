@@ -15,112 +15,14 @@ const { Header, Content, Footer, Sider } = Layout;
 const { TabPane } = Tabs;
 const { Search } = Input;
 const { Dragger } = Upload;
+
 function callback(key) {
     console.log(key);
 }
 
 
 
-const columns = [
-  {
-    title: '题干',
-    dataIndex: 'stem',
-    width:'25%',
-    onCell: ()=>{
-      return  {
-        style: {
-          maxWidth: 200, wordBreak:'breakall' , whiteSpace: 'prewrap', wordWrap:'breakword'
-        }
-      }
-    }, 
-           
-  },
-  {
-    title: '题型',
-    dataIndex: 'type',
-    width:'5%',
-    onCell: ()=>{
-      return  {
-        style: {
-          maxWidth: 50, wordBreak:'breakall' , whiteSpace: 'prewrap', wordWrap:'breakword'
-        }
-      }
-    }, 
-           
-  },
-  {
-    title: 'A选项',
-    dataIndex: 'optionA',
-    width:'15%',
-    onCell: ()=>{
-      return  {
-        style: {
-          maxWidth: 100, wordBreak:'breakall' , whiteSpace: 'prewrap', wordWrap:'breakword'
-        }
-      }
-    }, 
-  },
-  {
-    title: 'B选项',
-    dataIndex: 'optionB',
-    width:'15%',
-    onCell: ()=>{
-      return  {
-        style: {
-          maxWidth: 100, wordBreak:'breakall' , whiteSpace: 'prewrap', wordWrap:'breakword'
-        }
-      }
-    },  
-  },
-  {
-    title: 'C选项',
-    dataIndex: 'optionC',
-    width:'15%',
-    onCell: ()=>{
-      return  {
-        style: {
-          maxWidth: 100, wordBreak:'breakall' , whiteSpace: 'prewrap', wordWrap:'breakword'
-        }
-      }
-    },  
-  },
-  {
-    title: 'D选项',
-    dataIndex: 'optionD',
-    width:'15%',
-    onCell: ()=>{
-      return  {
-        style: {
-          maxWidth: 100, wordBreak:'breakall' , whiteSpace: 'prewrap', wordWrap:'breakword'
-        }
-      }
-    }, 
-  },
-  {
-    title: '正确答案',
-    dataIndex: 'correct_answer',
-    width:'10%',
-    onCell: ()=>{
-      return  {
-        style: {
-          maxWidth: 60, wordBreak:'breakall' , whiteSpace: 'prewrap', wordWrap:'breakword'
-        }
-      }
-    }, 
-  },
-  {
-    title: '分数',
-    dataIndex: 'value',
-    width:'10%',
-    onCell: ()=>{
-      return  {
-        style: {
-          maxWidth: 60, wordBreak:'breakall' , whiteSpace: 'prewrap', wordWrap:'breakword'
-        }
-      }
-    }, 
-  }
-];
+
 let datasourceonlinetestteacher=[];
 
 class TeacherCenter extends React.Component {
@@ -128,12 +30,113 @@ class TeacherCenter extends React.Component {
 
     super(props);
     this.state={
-      tid:this.props.location.state.username
+      tid:this.props.location.state.username,
+      columns : [
+        {
+          title: '题干',
+          dataIndex: 'stem',
+          width:'25%',
+          onCell: ()=>{
+            return  {
+              style: {
+                maxWidth: 200, wordBreak:'breakall' , whiteSpace: 'prewrap', wordWrap:'breakword'
+              }
+            }
+          }, 
+                 
+        },
+        {
+          title: '题型',
+          dataIndex: 'type',
+          width:'5%',
+          onCell: ()=>{
+            return  {
+              style: {
+                maxWidth: 50, wordBreak:'breakall' , whiteSpace: 'prewrap', wordWrap:'breakword'
+              }
+            }
+          }, 
+                 
+        },
+        {
+          title: 'A选项',
+          dataIndex: 'optionA',
+          width:'15%',
+          onCell: ()=>{
+            return  {
+              style: {
+                maxWidth: 100, wordBreak:'breakall' , whiteSpace: 'prewrap', wordWrap:'breakword'
+              }
+            }
+          }, 
+        },
+        {
+          title: 'B选项',
+          dataIndex: 'optionB',
+          width:'15%',
+          onCell: ()=>{
+            return  {
+              style: {
+                maxWidth: 100, wordBreak:'breakall' , whiteSpace: 'prewrap', wordWrap:'breakword'
+              }
+            }
+          },  
+        },
+        {
+          title: 'C选项',
+          dataIndex: 'optionC',
+          width:'15%',
+          onCell: ()=>{
+            return  {
+              style: {
+                maxWidth: 100, wordBreak:'breakall' , whiteSpace: 'prewrap', wordWrap:'breakword'
+              }
+            }
+          },  
+        },
+        {
+          title: 'D选项',
+          dataIndex: 'optionD',
+          width:'15%',
+          onCell: ()=>{
+            return  {
+              style: {
+                maxWidth: 100, wordBreak:'breakall' , whiteSpace: 'prewrap', wordWrap:'breakword'
+              }
+            }
+          }, 
+        },
+        {
+          title: '正确答案',
+          dataIndex: 'correct_answer',
+          width:'10%',
+          onCell: ()=>{
+            return  {
+              style: {
+                maxWidth: 60, wordBreak:'breakall' , whiteSpace: 'prewrap', wordWrap:'breakword'
+              }
+            }
+          }, 
+        },
+        {
+          title: '分数',
+          dataIndex: 'value',
+          width:'10%',
+          onCell: ()=>{
+            return  {
+              style: {
+                maxWidth: 60, wordBreak:'breakall' , whiteSpace: 'prewrap', wordWrap:'breakword'
+              }
+            }
+          }, 
+        }
+      ],
     };
     let k=0;
   if(datasourceonlinetestteacher.length==0){
 
-  
+  datasourceonlinetestteacher=[];
+  datasourceonlinetestteacher.length=0;
   axios
     .get('http://127.0.0.1:8000/show_choose_questionbyid/',
       { 
@@ -142,46 +145,59 @@ class TeacherCenter extends React.Component {
       }
     ).then((res)=>{
       console.log(res.data);
-      for(let i=0;i<res.data.length;i++){
-        datasourceonlinetestteacher.push({
-          key:i,
-          id:res.data[i].choose_id,
-          type:'选择',
-          stem:res.data[i].stem,
-          optionA:res.data[i]['optionA'],
-          optionB:res.data[i].optionB,
-          optionC:res.data[i].optionC,
-          optionD:res.data[i].optionD,
-          correct_answer:res.data[i].correct_answer,
-          value:res.data[i].value,
-        })
-        k=i;
-      }
+      let res1=res.data;
+      
+      axios
+      .get('http://127.0.0.1:8000/show_judge_questionbyid/',
+        { 
+          headers:{'content-type':'application/x-www-form-urlencoded'},
+
+        }
+      ).then((res)=>{
+        console.log(res.data);
+        
+        datasourceonlinetestteacher=[];
+        for(let i=0;i<res1.length;i++){
+          datasourceonlinetestteacher.push({
+            key:i,
+            id:res1[i].choose_id,
+            type:'选择',
+            stem:res1[i].stem,
+            optionA:res1[i]['optionA'],
+            optionB:res1[i].optionB,
+            optionC:res1[i].optionC,
+            optionD:res1[i].optionD,
+            correct_answer:res1[i].correct_answer,
+            value:res1[i].value,
+          })
+          k=i;
+        }
+
+
+
+        for(let i=0;i<res.data.length;i++){
+          datasourceonlinetestteacher.push({
+            key:i+k+1,
+            id:res.data[i].judge_id,
+            type:'判断',
+            stem:res.data[i].stem,
+            optionA:'/',
+            optionB:'/',
+            optionC:'/',
+            optionD:'/',
+            correct_answer:res.data[i].correct_answer,
+            value:res.data[i].value,
+          })
+        }
+
+        
+      })
+
+
+
+      
     })
 
-    axios
-    .get('http://127.0.0.1:8000/show_judge_questionbyid/',
-      { 
-        headers:{'content-type':'application/x-www-form-urlencoded'},
-
-      }
-    ).then((res)=>{
-      console.log(res.data);
-      for(let i=0;i<res.data.length;i++){
-        datasourceonlinetestteacher.push({
-          key:i+k+1,
-          id:res.data[i].judge_id,
-          type:'判断',
-          stem:res.data[i].stem,
-          optionA:'/',
-          optionB:'/',
-          optionC:'/',
-          optionD:'/',
-          correct_answer:res.data[i].correct_answer,
-          value:res.data[i].value,
-        })
-      }
-    })
     }
   }
   state = {
@@ -202,7 +218,7 @@ class TeacherCenter extends React.Component {
     old_optionB: null,
     old_optionC:null,
     old_optionD: null,
-    eidt_id: 0
+    edit_id: 0
   };
   // todo: fill route
   search=(value)=>{
@@ -213,45 +229,60 @@ class TeacherCenter extends React.Component {
        {
          headers:{'content-type':'application/x-www-form-urlencoded'},
        }
-    ).then((res)=>{
-      for(let i=0;i<res.data.length;i++){
-        datasourceonlinetestteacher.push({
-          key:i,
-          id:res.data[i].choose_id,
-          type:'选择',
-          stem:res.data[i].stem,
-          optionA:res.data[i]['optionA'],
-          optionB:res.data[i].optionB,
-          optionC:res.data[i].optionC,
-          optionD:res.data[i].optionD,
-          correct_answer:res.data[i].correct_answer,
-          value:res.data[i].value,
-        })
-        k=i;
-      }
-      this.setState({columns:this.state.columns});
+    ).then((res1)=>{
+      axios
+      .get('http://127.0.0.1:8000/search_choose/' + value, {headers:{'content-type':'application/x-www-form-urlencoded'},}
+      ).then((res)=>{
+        datasourceonlinetestteacher=[];
+        for(let i=0;i<res1.data.length;i++){
+          datasourceonlinetestteacher.push({
+            key:i,
+            id:res1.data[i].choose_id,
+            type:'选择',
+            stem:res1.data[i].stem,
+            optionA:res1.data[i]['optionA'],
+            optionB:res1.data[i].optionB,
+            optionC:res1.data[i].optionC,
+            optionD:res1.data[i].optionD,
+            correct_answer:res1.data[i].correct_answer,
+            value:res1.data[i].value,
+          })
+          k=i;
+        }
+
+        for(let i=0;i<res.data.length;i++){
+          datasourceonlinetestteacher.push({
+            key:i+k+1,
+            id:res.data[i].judge_id,
+            type:'判断',
+            stem:res.data[i].stem,
+            optionA:'/',
+            optionB:'/',
+            optionC:'/',
+            optionD:'/',
+            correct_answer:res.data[i].correct_answer,
+            value:res.data[i].value,
+          })
+        }
+
+      });
+
+
+      
+
     });
 
-    axios
-    .get('http://127.0.0.1:8000/search_choose/' + value, {headers:{'content-type':'application/x-www-form-urlencoded'},}
-    ).then((res)=>{
-      for(let i=0;i<res.data.length;i++){
-        datasourceonlinetestteacher.push({
-          key:i+k+1,
-          id:res.data[i].judge_id,
-          type:'判断',
-          stem:res.data[i].stem,
-          optionA:'/',
-          optionB:'/',
-          optionC:'/',
-          optionD:'/',
-          correct_answer:res.data[i].correct_answer,
-          value:res.data[i].value,
-        })
-      }
-      this.setState({columns:this.state.columns});
-    });
+  }
+  componentDidMount() {
+    
 
+    
+    this.timer = setInterval(function () {
+      this.setState({
+        columns:this.state.columns,
+      });
+    }.bind(this), 100);
+  
   }
   undatechange=()=>{
     axios
@@ -293,22 +324,21 @@ class TeacherCenter extends React.Component {
   showEdit = (tempselect) => {
     console.log(tempselect);
     console.log(datasourceonlinetestteacher);
+    if(tempselect){
     if ( tempselect.length == 1) {
       for(let j=0; j < datasourceonlinetestteacher.length; j++){
         if(tempselect[0] == datasourceonlinetestteacher[j].key){
           if (datasourceonlinetestteacher[j].type=='判断') {
-            console.log(datasourceonlinetestteacher[j]);
-            
-             this.state.old_stem= datasourceonlinetestteacher[j]['stem'];
-             this.state.old_val= datasourceonlinetestteacher[j].value;
-             this.state.old_answer= datasourceonlinetestteacher[j].correct_answer;
-             this.state.edit_id= datasourceonlinetestteacher[j].id;
+
              this.setState({
+              old_stem: datasourceonlinetestteacher[j].stem,
+              old_val: datasourceonlinetestteacher[j].value,
+              old_answer: datasourceonlinetestteacher[j].correct_answer,
+              edit_id: datasourceonlinetestteacher[j].id,
                IsEditJudge:true,
              })
             
 
-            console.log(this.state.old_stem);
           } else {
             this.setState({
               old_stem: datasourceonlinetestteacher[j].stem,
@@ -329,13 +359,17 @@ class TeacherCenter extends React.Component {
     } else if (this.state.selectedRowKeys.length > 1) {
       message.warning('编辑状态只允许选中一道题');
     }
+  }else{
+    message.warning('请先选中一道题');
+  }
   }
 
   EditJudge=(values)=> {
-    let url_params = this.state.eidt_id+'/'+values['stem']+'/'+values['value']+'/'+values['correctans'];
+    let url_params = this.state.edit_id+'/'+values['stem']+'/'+values['value']+'/'+values['correctans'];
     axios.get('http://127.0.0.1:8000/edit/judge/'+url_params, 
     {headers: {'content-type':'application/x-www-form-urlencoded'}}
     ).then((res)=>{
+      console.log("777");
       this.setState({
         IsEditJudge: false,
       })
@@ -343,10 +377,12 @@ class TeacherCenter extends React.Component {
     message.success('题目修改成功');
   }
   EditChoose=(values)=> {
-    let url_params = this.state.eidt_id+'/'+values['stem']+'/'+values['value']+'/'+values['selectA']+'/'+values['selectB']+'/'+values['selectC']+'/'+values['selectD']+'/'+values['correctans'];
+    let url_params = this.state.edit_id+'/'+values['stem']+'/'+values['value']+'/'+values['selectA']+'/'+values['selectB']+'/'+values['selectC']+'/'+values['selectD']+'/'+values['correctans'];
+    console.log(url_params);
     axios.get('http://127.0.0.1:8000/edit/choose/'+url_params, 
     {headers: {'content-type':'application/x-www-form-urlencoded'}}
     ).then((res)=>{
+      console.log("888");
       this.setState({
         IsEditChoose: false,
       })
@@ -396,7 +432,7 @@ class TeacherCenter extends React.Component {
     this.setState({tempselect:tt})
   };
   selectRow = (record) => {
-    const selectedRowKeys = [...this.state.selectedRowKeys];
+    const selectedRowKeys = [this.state.selectedRowKeys];
     if (selectedRowKeys.indexOf(record.key) >= 0) {
       selectedRowKeys.splice(selectedRowKeys.indexOf(record.key), 1);
     } else {
@@ -411,7 +447,7 @@ class TeacherCenter extends React.Component {
     this.handleok();
     this.state.tempadd='Max-cut problem: ';
     axios
-    .get('http://127.0.0.1:8000/add_choose_question/97/'+values['courseid']+'/'+values['teacherid']+'/'+values['type']+'/'+values['stem']+'/'+values['value']+'/'+values['selectA']+'/'+values['selectB']+'/'+values['selectC']+'/'+values['selectD']+'/'+values['correctans'],
+    .get('http://127.0.0.1:8000/add_choose_question/97/'+values['courseid']+'/'+values['teacherid']+'/0/'+values['stem']+'/'+values['value']+'/'+values['selectA']+'/'+values['selectB']+'/'+values['selectC']+'/'+values['selectD']+'/'+values['correctans'],
       { 
         headers:{'content-type':'application/x-www-form-urlencoded'},
 
@@ -472,12 +508,16 @@ class TeacherCenter extends React.Component {
         }
       }
     }
+    else{
+      message.warning('请先选中一道题');
+    }
+    this.componentDidMount();
   }
   addjudgeques=(values)=>{
     this.handleok();
     this.state.tempadd='Max-cut problem: ';
     axios
-    .get('http://127.0.0.1:8000/add_judge_question/97/'+values['courseid']+'/'+values['teacherid']+'/'+values['type']+'/'+values['stem']+'/'+values['value']+'/'+values['correctans'],
+    .get('http://127.0.0.1:8000/add_judge_question/97/'+values['courseid']+'/'+values['teacherid']+'/0/'+values['stem']+'/'+values['value']+'/'+values['correctans'],
       { 
         headers:{'content-type':'application/x-www-form-urlencoded'},
       }
@@ -689,7 +729,7 @@ class TeacherCenter extends React.Component {
                           layout="horizontal"
                           onFinish={this.addpaper}
                         >
-                          <Form.Item label="试卷名" name="paper_name" disabled>
+                          <Form.Item  rules={[{required: true,}]} label="试卷名" name="paper_name" disabled>
                           
                           <TextArea
                             placeholder="50字以内"
@@ -716,14 +756,7 @@ class TeacherCenter extends React.Component {
                           layout="horizontal"
                           onFinish={this.addchooseques}
                         >
-                          <Form.Item label="所属章节" name="type" disabled>
-                          
-                          <TextArea
-                            placeholder="50字以内"
-                            autoSize={{ minRows: 1, maxRows: 2 }}
-                          />
-                          </Form.Item>
-                          <Form.Item label="题干" name="stem" disabled>
+                          <Form.Item rules={[{required: true,}]} label="题干" name="stem" disabled>
                           
                           <TextArea
                             placeholder="500字以内"
@@ -754,10 +787,10 @@ class TeacherCenter extends React.Component {
                             autoSize={{ minRows: 2, maxRows: 4 }}
                           />
                           </Form.Item>
-                          <Form.Item label="分数" name="value">
+                          <Form.Item rules={[{required: true,}]} label="分数" name="value">
                           <InputNumber min={0} max={10} defaultValue={0}/>
                           </Form.Item>
-                          <Form.Item label="正确选项" name="correctans">
+                          <Form.Item rules={[{required: true,}]} label="正确选项" name="correctans">
                             <Radio.Group onChange={this.handleanswer} value={this.state.answer} >
                               <Radio value="A">A</Radio>
                               <Radio value="B">B</Radio>
@@ -782,17 +815,17 @@ class TeacherCenter extends React.Component {
                           layout="horizontal"
                           onFinish={this.addjudgeques}
                         >
-                          <Form.Item label="题干" name="stem" disabled>
+                          <Form.Item rules={[{required: true,}]} label="题干" name="stem" disabled>
                           
                           <TextArea
                             placeholder="500字以内"
                             autoSize={{ minRows: 3, maxRows: 6 }}
                           />
                           </Form.Item>
-                          <Form.Item label="分数" name="value">
+                          <Form.Item rules={[{required: true,}]} label="分数" name="value">
                           <InputNumber min={0} max={10} defaultValue={0}/>
                           </Form.Item>
-                          <Form.Item label="正确选项" name="correctans">
+                          <Form.Item  rules={[{required: true,}]}label="正确选项" name="correctans">
                             <Radio.Group onChange={this.handleanswer} value={this.state.answer} >
                               <Radio value="T">T</Radio>
                               <Radio value="F">F</Radio>
@@ -810,24 +843,24 @@ class TeacherCenter extends React.Component {
                           onOk={this.handleGenerate} onCancel={this.handleCancle3} footer={null}
                         >
                           <Form onFinish={this.generatePaperRandomly}>
-                            <Form.Item name='paper_name' label="试卷名称" style={{width: '80%'}}>
+                            <Form.Item name='paper_name'  rules={[{required: true,}]}label="试卷名称" style={{width: '80%'}}>
                               <Input placeholder="请输入试卷名称"></Input>
                             </Form.Item>
-                            <Form.Item name='course_id' label="课程编号" style={{width: '80%'}}>
+                            <Form.Item name='course_id'rules={[{required: true,}]} label="课程编号" style={{width: '80%'}}>
                               <Input placeholder="请输入课程编号"></Input>
                             </Form.Item>
-                            <Form.Item name='teacher_id' label="教师编号" style={{width: '80%'}}>
+                            <Form.Item name='teacher_id'rules={[{required: true,}]}label="教师编号" style={{width: '80%'}}>
                               <Input placeholder='请输入教师编号'></Input>
                             </Form.Item>
-                            <Form.Item name='choose_num' label='选择题数' style={{width: '80%'}}>
+                            <Form.Item name='choose_num'rules={[{required: true,}]} label='选择题数' style={{width: '80%'}}>
                               <InputNumber placeholder='请输入判断题数目'></InputNumber>
                             </Form.Item>
-                            <Form.Item name='judge_num' label='判断题数' style={{width: '80%'}}>
+                            <Form.Item name='judge_num'rules={[{required: true,}]} label='判断题数' style={{width: '80%'}}>
                               <InputNumber placeholder='请输入选择题数目'></InputNumber>
                             </Form.Item>
 
                             <Form.Item style={{margin: '0 43% 0 43%'}} label=''>
-                              <Button htmlType='submit' type="primary" onClick={this.generatePaperRandomly}>确定</Button>
+                              <Button htmlType='submit' type="primary" >确定</Button>
                             </Form.Item>
                           </Form>
 
@@ -868,15 +901,15 @@ class TeacherCenter extends React.Component {
                             
                     
                               <Form.Item label="题干" name="stem" disabled>
-                              <Input rows={4}
-                                placeholder="500字以内" autoSize={{ minRows: 3, maxRows: 6 }}>
-                                </Input>
+                              <textarea rows={4} placeholder="500字以内" autoSize={{ minRows: 3, maxRows: 6 }}>
+                                {this.state.old_stem}
+                              </textarea>
                               </Form.Item>
                               <Form.Item label="分数" name="value">
                                 <InputNumber min={0} max={10} defaultValue={this.state.old_val}/>
                               </Form.Item>
                               <Form.Item label="正确选项" name="correctans">
-                                <Radio.Group onChange={this.handleanswer} value={this.state.old_answer} >
+                                <Radio.Group onChange={this.handleanswer} value={this.state.answer} >
                                   <Radio value="T">T</Radio>
                                   <Radio value="F">F</Radio>
                                 </Radio.Group>
@@ -894,7 +927,7 @@ class TeacherCenter extends React.Component {
                             layout="horizontal" onFinish={this.EditChoose}>
 
                             <Form.Item label="题干" name="stem" disabled>
-                              <textarea rows={4} placeholder="500字以内" autoSize={{ minRows: 3, maxRows: 6 }}>
+                              <textarea rows={4} placeholder="500字以内" autoSize={{ minRows: 3, maxRows: 6 }} >
                                 {this.state.old_stem}
                               </textarea>
                             </Form.Item>
@@ -943,7 +976,7 @@ class TeacherCenter extends React.Component {
                     </div>
                     <div id="testing"></div>
                     <div id="QB_content">
-                      <Table rowSelection={rowSelection} columns={columns} dataSource={datasourceonlinetestteacher}
+                      <Table rowSelection={rowSelection} columns={this.state.columns} dataSource={datasourceonlinetestteacher}
                         onRow={(record) => ({
                           onClick: () => {
                             this.selectRow(record);}

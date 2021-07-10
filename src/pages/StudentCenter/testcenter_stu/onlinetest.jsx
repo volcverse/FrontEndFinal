@@ -81,6 +81,15 @@ let datasource=[];
 
 function bac(sid){
   console.log(123);
+  axios
+    .get('http://127.0.0.1:8000/examstateupdate',
+      { 
+        headers:{'content-type':'application/x-www-form-urlencoded'},
+
+      }
+    ).then((res)=>{
+
+    })
   if(datasource.length==0)
   axios
     .get('http://127.0.0.1:8000/examstu/query/'+sid,
@@ -90,33 +99,26 @@ function bac(sid){
       }
     ).then((res)=>{
       let texamid=res.data;
+      console.log(texamid);
+      datasource=[];
+      datasource.length=0;
       for(let i=0;i<=texamid.length-1;i++){
-        axios
-        .get('http://127.0.0.1:8000/exam/query/'+texamid[i]['exam_id'],
-          { 
-            headers:{'content-type':'application/x-www-form-urlencoded'},
-  
-          }
-        ).then((res)=>{
-          console.log(res.data);
           datasource.push({
             tid:i,
-            name:res.data[0].exam_id,
-            eid:res.data[0].exam_id,
-            time:res.data[0].end_time,
-            states:res.data[0].state,
-            teacher:res.data[0].teacher_id,
-            course:res.data[0].course_id
+            name:texamid[i].exam_name,
+            eid:texamid[i].exam_id,
+            time:texamid[i].end_time,
+            states:texamid[i].state,
+            teacher:texamid[i].teacher_id,
+            course:texamid[i].course_id
           })
-          return 1;
-        })
       }
     })
 }
 
 
 
-class StudentCenter extends React.Component {
+export default class onlineteststu extends React.Component {
 
   constructor(props){
     super(props);
@@ -128,33 +130,31 @@ class StudentCenter extends React.Component {
       btnClassName:' ',
       btnClassNameArry: [ ],
       y:bac(this.props.location.state.username),
-      columns  :[
+      columns:[
         {
           title: '',
           dataIndex: 'tid',
           width:'100%',
           render:text=>
-          <Card title={<div><DesktopOutlined />  <Link to={{pathname:"/StudentCenter/testcenter_stu/testpaper/",state:{eid:datasource[text]['eid']}}}>{datasource[text]['eid']}</Link></div>} extra={<div><Tag color="blue">{datasource[text]['states']}</Tag></div>} style={{ marginRight: 0,marginLeft: 0 }}>
+          <Card title={<div><DesktopOutlined />  <Link to={{pathname:"/StudentCenter/testcenter_stu/testpaper/",state:{eid:datasource[text]['eid']}}}>{datasource[text]['name']}</Link></div>} extra={<div><Tag color="blue">{datasource[text]['states']}</Tag></div>} style={{ marginRight: 0,marginLeft: 0 }}>
                     <div class='row1'><div>结束时间：{datasource[text]['time']}</div> <div style={{ textAlign:'right'}}><ReadOutlined /> {datasource[text]['course']}  &nbsp;&nbsp;&nbsp; <IdcardOutlined />{datasource[text]['teacher']}</div></div>
           </Card>
         },
       ],
       testt:1
     };
-    console.log(this.state.sid);
-    console.log(this.state.columns);
-    console.log(datasource);
-    console.log(456);
-    console.log('updatefinish');
-    axios
-    .get('http://127.0.0.1:8000/examstateupdate',
-      { 
-        headers:{'content-type':'application/x-www-form-urlencoded'},
+  }
+  componentDidMount() {
+    
 
-      }
-    ).then((res)=>{
+    
+    this.timer = setInterval(function () {
+      this.setState({
+        columns:this.state.columns,
+      });
 
-    })
+    }.bind(this), 100);
+  
   }
   handleClick = e => {
     console.log('click ', e);
@@ -171,23 +171,6 @@ class StudentCenter extends React.Component {
           <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
             <div className="site-layout-background" style={{ padding: 24, textAlign: 'left' }}>
             <Table columns={this.state.columns} dataSource={datasource}/>
-            {/* <Card title={<div><DesktopOutlined />  <Link to="/testcenter_stu/testpaper">test 1</Link></div>} extra={<div><Tag color="blue">已开放</Tag></div>} style={{ marginRight: 20,marginLeft: 20 }}>
-              <div class='row1'><div>结束时间：7月1日 23：00</div> <div style={{ textAlign:'right'}}><ReadOutlined /> ZJU   &nbsp;&nbsp;&nbsp; <IdcardOutlined />  教师123</div></div>
-              
-            </Card>
-            <br></br>
-            <Card title={<div><DesktopOutlined />  <Link to="/testcenter_stu/testpaper">test 2</Link></div>} extra={<div><Tag color="orange">未开放</Tag></div>} style={{ marginRight: 20,marginLeft: 20 }}>
-              <div class='row1'><div>结束时间：8月1日 23：00</div> <div style={{ textAlign:'right'}}><ReadOutlined /> ZJU   &nbsp;&nbsp;&nbsp; <IdcardOutlined />  教师123</div></div>
-              
-            </Card>
-            <br></br>
-            <Card title={<div><DesktopOutlined />  <Link to="/testcenter_stu/testpaper">test 3</Link></div>} extra={<div><Tag color="grey">已截止</Tag></div>} style={{ marginRight: 20,marginLeft: 20 }}>
-              <div class='row1'><div>结束时间：7月1日 23：00</div> <div style={{ textAlign:'right'}}><ReadOutlined /> ZJU   &nbsp;&nbsp;&nbsp; <IdcardOutlined />  教师123</div></div>
-              
-            </Card> */}
-
-
-
             </div>
           <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
           </Content>
@@ -198,4 +181,3 @@ class StudentCenter extends React.Component {
 
 
 }
-export default StudentCenter;

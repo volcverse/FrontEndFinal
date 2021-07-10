@@ -124,31 +124,20 @@ function abc(eid){
                 choosenum=mm.length;
                 datasourcechoose=[];
             for(let i=0;i<mm.length;i++){
-              axios
-              .get('http://127.0.0.1:8000/show_choose_questionbyid/'+mm[i]['choose_id'],
-                    { 
-                      headers:{'content-type':'application/x-www-form-urlencoded'},
-            
-                    }
-                  ).then((res)=>{
-                    console.log(datasourcechoose[i])
-                    console.log(res.data);
-                    if(res.data.length>0){
-                      let ttt=res.data[0]['choose_id'];
                       datasourcechoose.push({
                         tid:i,
-                      cid:res.data[0]['choose_id'],
-                    stem:res.data[0]['stem'],
-                    value:res.data[0]['value'],
-                    optionA:res.data[0]['optionA'],
-                    optionB:res.data[0]['optionB'],
-                    optionC:res.data[0]['optionC'],
-                    optionD:res.data[0]['optionD'],
-                    correct_answer:res.data[0]['correct_answer'],
-                    correctrate:ccddata.choose[ttt],
+                cid:mm[i]['choose_id'],
+                stem:mm[i]['stem'],
+                value:mm[i]['value'],
+                optionA:mm[i]['optionA'],
+                optionB:mm[i]['optionB'],
+                optionC:mm[i]['optionC'],
+                optionD:mm[i]['optionD'],
+                    correct_answer:mm[i]['correct_answer'],
+                    correctrate:ccddata.choose[mm[i]['choose_id']],
                     })
-                  }
-              })
+                  
+              
             }
           })
           
@@ -166,24 +155,15 @@ function abc(eid){
                 judgenum=mm2.length;
                 datasourcejudge=[];
           for(let i=0;i<mm2.length;i++){
-            axios
-            .get('http://127.0.0.1:8000/show_judge_questionbyid/'+mm2[i]['judge_id'],
-                  { 
-                    headers:{'content-type':'application/x-www-form-urlencoded'},
-          
-                  }
-                ).then((res)=>{
-                  console.log(res.data);
-                  let ttt=res.data[0]['judge_id'];
+            
                   datasourcejudge.push({
                     tid:i,
-                    jid:res.data[0]['judge_id'],
-                  stem:res.data[0]['stem'],
-                  value:res.data[0]['value'],
-                  correct_answer:res.data[0]['correct_answer'],
-                  correctrate:ccddata.judge[ttt],
+                    jid:mm2[i]['judge_id'],
+                  stem:mm2[i]['stem'],
+                  value:mm2[i]['value'],
+                  correct_answer:mm2[i]['correct_answer'],
+                  correctrate:ccddata.judge[mm2[i]['judge_id']],
                 })
-            })
           }
           })
           return 1;
@@ -392,6 +372,18 @@ class StudentCenter extends React.Component {
     //       })
     // })
     
+  }
+  componentDidMount() {
+    
+
+    
+    this.timer = setInterval(function () {
+      this.setState({
+        columns:this.state.columns,
+        columns2:this.state.columns2,
+      });
+    }.bind(this), 100);
+  
   }
   Greeting(props) {
     const text=props.ttext;

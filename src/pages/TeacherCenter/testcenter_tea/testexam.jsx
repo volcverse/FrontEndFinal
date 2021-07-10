@@ -61,20 +61,16 @@ function bac(tid){
       }
     ).then((res)=>{
       let texamid=res.data;
+      console.log(texamid);
       datasourcetestexam=[];
+      datasourcetestexam.length=0;
+      console.log(datasourcetestexam);
       for(let i=0;i<=texamid.length-1;i++){
-        axios
-        .get('http://127.0.0.1:8000/show_test_paperbyid/'+texamid[i]['paper_id'],
-          { 
-            headers:{'content-type':'application/x-www-form-urlencoded'},
-    
-          }
-        ).then((res)=>{
-            console.log(res.data);
+        
             
             datasourcetestexam.push({
-                tid:i,
-                paper_name:res.data[0]['paper_name'],
+                ttid:i,
+                exam_name:texamid[i]['exam_name'],
                 paper_id:texamid[i]['paper_id'],
                 exam_id:texamid[i]['exam_id'],
                 course_id:texamid[i]['course_id'],
@@ -83,12 +79,12 @@ function bac(tid){
                 endtime:texamid[i]['end_time'],
               })
               console.log(datasourcetestexam);
-        });       
+             
       }
       return 1;
     })
 }
-class StudentCenter extends React.Component {
+export default class testexam extends React.Component {
   constructor(props){
 
     super(props);
@@ -100,17 +96,27 @@ class StudentCenter extends React.Component {
     columns  :[
       {
         title: '',
-        dataIndex: 'tid',
+        dataIndex: 'ttid',
         width:'100%',
         render:text=>
-        <Card title={<div><DesktopOutlined />  <Link to={{pathname:"/TeacherCenter/testcenter_tea/testpaper1/",state:{pid:datasourcetestexam[text]['exam_id']}}}>{datasourcetestexam[text]['paper_name']}</Link></div>} extra={<div><Tag color="blue">{datasourcetestexam[text]['state']}</Tag></div>} style={{ marginRight: 0,marginLeft: 0 }}>
+        <Card title={<div><DesktopOutlined />  <Link to={{pathname:"/TeacherCenter/testcenter_tea/testpaper1/",state:{pid:datasourcetestexam[text]['exam_id']}}}>{datasourcetestexam[text]['exam_name']}</Link></div>} extra={<div><Tag color="blue">{datasourcetestexam[text]['state']}</Tag></div>} style={{ marginRight: 0,marginLeft: 0 }}>
                   <div class='row1'><div>开始时间：{datasourcetestexam[text]['starttime']}</div> <div>结束时间：{datasourcetestexam[text]['endtime']}</div></div>
         </Card>
       },
     ],
   };
   }
+  componentDidMount() {
+    
 
+    
+    this.timer = setInterval(function () {
+      this.setState({
+        columns:this.state.columns,
+      });
+    }.bind(this), 100);
+  
+  }
   showModal = () => {
     this.setState({
       visible: true,
@@ -147,4 +153,4 @@ class StudentCenter extends React.Component {
 
 
 }
-export default StudentCenter;
+

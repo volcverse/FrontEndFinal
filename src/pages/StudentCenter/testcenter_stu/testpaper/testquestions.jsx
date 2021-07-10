@@ -79,7 +79,7 @@ function abc(eid){
           }
           if(examinfo[0]['state']=='已结束'){
             bable=false;
-            
+            aable=true;
           }
           if(examinfo[0]['state']=='未开始'){
             bable=true;
@@ -97,30 +97,19 @@ function abc(eid){
                 console.log(res.data);
                 mm=res.data;
                 choosenum=mm.length;
-
+                datasourcechoose=[];
+                datasourcejudge=[];
             for(let i=0;i<mm.length;i++){
-              axios
-              .get('http://127.0.0.1:8000/show_choose_questionbyid/'+mm[i]['choose_id'],
-                    { 
-                      headers:{'content-type':'application/x-www-form-urlencoded'},
-            
-                    }
-                  ).then((res)=>{
-                    console.log(datasourcechoose[i])
-                    console.log(res.data);
-                    if(res.data.length>0){
-                      datasourcechoose.push({
-                        tid:i,
-                      cid:res.data[0]['choose_id'],
-                    stem:res.data[0]['stem'],
-                    value:res.data[0]['value'],
-                    optionA:res.data[0]['optionA'],
-                    optionB:res.data[0]['optionB'],
-                    optionC:res.data[0]['optionC'],
-                    optionD:res.data[0]['optionD'],
-                    })
-                  }
-              })
+                datasourcechoose.push({
+                tid:i,
+                cid:mm[i]['choose_id'],
+                stem:mm[i]['stem'],
+                value:mm[i]['value'],
+                optionA:mm[i]['optionA'],
+                optionB:mm[i]['optionB'],
+                optionC:mm[i]['optionC'],
+                optionD:mm[i]['optionD'],
+                })
             }
           })
           
@@ -136,23 +125,16 @@ function abc(eid){
                 console.log(res.data);
                 mm2=res.data;
                 judgenum=mm2.length;
-
+                datasourcejudge=[];
+                datasourcejudge.length=0;
           for(let i=0;i<mm2.length;i++){
-            axios
-            .get('http://127.0.0.1:8000/show_judge_questionbyid/'+mm2[i]['judge_id'],
-                  { 
-                    headers:{'content-type':'application/x-www-form-urlencoded'},
-          
-                  }
-                ).then((res)=>{
-                  console.log(res.data);
                   datasourcejudge.push({
                     tid:i,
-                    jid:res.data[0]['judge_id'],
-                  stem:res.data[0]['stem'],
-                  value:res.data[0]['value'],
+                    jid:mm2[i]['judge_id'],
+                  stem:mm2[i]['stem'],
+                  value:mm2[i]['value'],
                 })
-            })
+            
           }
           })
           return 1;
