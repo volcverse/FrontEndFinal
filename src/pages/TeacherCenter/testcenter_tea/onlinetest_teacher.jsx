@@ -225,13 +225,13 @@ class TeacherCenter extends React.Component {
     let k=0;
     datasourceonlinetestteacher=[];
     axios
-    .get('http://127.0.0.1:8000/search_judge/' + value,
+    .get('http://127.0.0.1:8000/search_choose/' + value,
        {
          headers:{'content-type':'application/x-www-form-urlencoded'},
        }
     ).then((res1)=>{
       axios
-      .get('http://127.0.0.1:8000/search_choose/' + value, {headers:{'content-type':'application/x-www-form-urlencoded'},}
+      .get('http://127.0.0.1:8000/search_judge/' + value, {headers:{'content-type':'application/x-www-form-urlencoded'},}
       ).then((res)=>{
         datasourceonlinetestteacher=[];
         for(let i=0;i<res1.data.length;i++){
@@ -756,6 +756,12 @@ class TeacherCenter extends React.Component {
                           layout="horizontal"
                           onFinish={this.addchooseques}
                         >
+                          <Form.Item rules={[{required: true,}]} label="课程编号" name="courseid" disabled>
+                          
+                          <TextArea
+                            autoSize={{ minRows: 1, maxRows: 1 }}
+                          />
+                          </Form.Item>
                           <Form.Item rules={[{required: true,}]} label="题干" name="stem" disabled>
                           
                           <TextArea
@@ -815,6 +821,12 @@ class TeacherCenter extends React.Component {
                           layout="horizontal"
                           onFinish={this.addjudgeques}
                         >
+                          <Form.Item rules={[{required: true,}]} label="课程编号" name="courseid" disabled>
+                          
+                          <TextArea
+                            autoSize={{ minRows: 1, maxRows: 1 }}
+                          />
+                          </Form.Item>
                           <Form.Item rules={[{required: true,}]} label="题干" name="stem" disabled>
                           
                           <TextArea

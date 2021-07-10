@@ -99,7 +99,7 @@ export default class testexam extends React.Component {
         dataIndex: 'ttid',
         width:'100%',
         render:text=>
-        <Card title={<div><DesktopOutlined />  <Link to={{pathname:"/TeacherCenter/testcenter_tea/testpaper1/",state:{pid:datasourcetestexam[text]['exam_id']}}}>{datasourcetestexam[text]['exam_name']}</Link></div>} extra={<div><Tag color="blue">{datasourcetestexam[text]['state']}</Tag></div>} style={{ marginRight: 0,marginLeft: 0 }}>
+        <Card title={<div><DesktopOutlined />  <Link to={{pathname:"/TeacherCenter/testcenter_tea/testpaper1/",state:{pid:datasourcetestexam[text]['exam_id'],username:this.state.tid}}}>{datasourcetestexam[text]['exam_name']}</Link></div>} extra={<div><Tag color="blue">{datasourcetestexam[text]['state']}</Tag></div>} style={{ marginRight: 0,marginLeft: 0 }}>
                   <div class='row1'><div>开始时间：{datasourcetestexam[text]['starttime']}</div> <div>结束时间：{datasourcetestexam[text]['endtime']}</div></div>
         </Card>
       },
