@@ -59,7 +59,7 @@ function cancel(row) {
 
 export default class data extends Component {
   state = {
-    userInfo: {},
+    username: this.props.location.state.username,
     data: [],
     loading: true,
   };
@@ -72,12 +72,6 @@ export default class data extends Component {
 
   componentDidMount() {
     _this = this;
-
-    let userInfo = sessionStorage.getItem("userInfo");
-    if (!userInfo) {
-      this.props.history.push({ pathname: "/LoginInterface" });
-    }
-    this.state.userInfo = JSON.parse(userInfo);
     this.getData();
   }
 

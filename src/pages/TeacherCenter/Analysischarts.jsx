@@ -95,7 +95,7 @@ const layout = {
 
 export default class Quiz extends Component {
   state = {
-    userInfo: {},
+    username: this.props.location.state.username,
     classID: 0,
     quiz: [],
     loading: true,
@@ -119,11 +119,6 @@ export default class Quiz extends Component {
     myChart = echarts.init(chartDom);
     myChart.showLoading();
 
-    let userInfo = sessionStorage.getItem("userInfo");
-    if (!userInfo) {
-      this.props.history.push({ pathname: "/LoginInterface" });
-    }
-    this.state.userInfo = JSON.parse(userInfo);
 
     this.getData();
   }

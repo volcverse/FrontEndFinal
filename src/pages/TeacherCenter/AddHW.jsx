@@ -12,7 +12,7 @@ export default class AddHW extends React.Component {
   state = {
     Assignment_title: "",
     Assignment_content: "",
-    teacherID: 0,
+    teacherID: this.props.location.state.username,
     start_date: "",
     end_date: "",
     Score_percent: "",
@@ -38,11 +38,11 @@ export default class AddHW extends React.Component {
     this.setState({
       className:this.props.location.state.name
     })
-    let userInfo = sessionStorage.getItem("userInfo");
-    if (!userInfo) {
-      this.props.history.push({ pathname: "/LoginInterface" });
-    }
-    this.state.teacherID = JSON.parse(userInfo).id;
+    // let userInfo = sessionStorage.getItem("userInfo");
+    // if (!userInfo) {
+    //   this.props.history.push({ pathname: "/LoginInterface" });
+    // }
+    // this.state.teacherID = JSON.parse(userInfo).id;
   }
   saveAssignment = async (e) => {
     this.setState({

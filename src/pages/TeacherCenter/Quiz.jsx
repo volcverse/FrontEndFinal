@@ -177,7 +177,7 @@ export default class Quiz extends Component {
   //class id
   state = {
     classID: 0,
-    teacherID: 0,
+    teacherID: this.props.location.state.username,
     quiz: [],
     loading: true,
     className: "",
@@ -187,11 +187,6 @@ export default class Quiz extends Component {
     this.state.classID = this.props.location.state.classID;
     this.state.className = this.props.location.state.name;
 
-    let userInfo = sessionStorage.getItem("userInfo");
-    if (!userInfo) {
-      this.props.history.push({ pathname: "/LoginInterface" });
-    }
-    this.state.teacherID = JSON.parse(userInfo).id;
 
     this.getData();
   }

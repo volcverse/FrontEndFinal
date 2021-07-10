@@ -101,7 +101,7 @@ const deleteData = (row) => {
 
 export default class resource extends Component {
   state = {
-    userInfo: {},
+    username: this.props.location.state.username,
     resource: [],
     loading: true,
     name: "",
@@ -119,11 +119,6 @@ export default class resource extends Component {
     _this = this;
     this.state.classID = this.props.location.state.classID;
     this.state.className = this.props.location.state.name;
-    let userInfo = sessionStorage.getItem("userInfo");
-    if (!userInfo) {
-      this.props.history.push({ pathname: "/LoginInterface" });
-    }
-    this.state.userInfo = JSON.parse(userInfo);
     this.getData();
   }
 

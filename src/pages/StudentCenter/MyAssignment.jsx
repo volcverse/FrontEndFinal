@@ -76,7 +76,7 @@ const columns = [
             showUploadList={false}
             action={"/api/StudentUploadAssignment"}
             data={{
-              id: _this.state.userInfo.id,
+              id: _this.state.username,
               assignment_id: record.Assignment_id,
             }}
             onChange={onChange}
@@ -149,7 +149,7 @@ const onChange = ({ file }) => {
 
 export default class PersonalResource extends Component {
   state = {
-    userInfo: {},
+    username: this.props.location.state.username,
     classID: 0,
     personalresource: [],
     loading: true,
@@ -167,9 +167,7 @@ export default class PersonalResource extends Component {
       className: this.props.location.state.name,
     });
 
-    let userInfo = sessionStorage.getItem("userInfo");
     
-    this.state.userInfo = JSON.parse(userInfo);
   }
 
   componentDidMount() {
@@ -185,7 +183,7 @@ export default class PersonalResource extends Component {
     axios
       .get("http://localhost:8000/api/GetAssignmentList", {
         params: {
-          id: this.state.userInfo.id,
+          id: this.state.username,
           classID: this.state.classID,
         },
       })
