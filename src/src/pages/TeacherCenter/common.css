@@ -1,0 +1,23 @@
+.analysis {
+  display: flex;
+  flex-direction: row;
+  margin: 20px 0;
+}
+
+.chart-content {
+  width: 48%;
+  margin-right: 2%;
+}
+#chart {
+  width: 100%;
+  height: 400px;
+}
+.rank-content{
+    width: 100%;
+    height: 400px;
+}
+
+#rank {
+  width: 48%;
+  margin-left: 2%;
+}

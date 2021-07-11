@@ -126,12 +126,16 @@ const deleteData = (row) => {
 
 export default class data extends Component {
   state = {
-    userInfo: {},
-    classID: 0,
+    username: this.props.location.state.username,
+    classID: this.props.location.state.classID,
     data: [],
     loading: true,
     className: "",
   };
+
+  componentWillMount(){
+    console.log(this.props.location.state.username);
+  }
 
   handleInput = (e) => {
     this.setState({
@@ -144,11 +148,11 @@ export default class data extends Component {
     this.state.classID = this.props.location.state.classID;
     this.state.className = this.props.location.state.name;
 
-    let userInfo = sessionStorage.getItem("userInfo");
-    if (!userInfo) {
-      this.props.history.push({ pathname: "/LoginInterface" });
-    }
-    this.state.userInfo = JSON.parse(userInfo);
+    // let userInfo = sessionStorage.getItem("userInfo");
+    // if (!userInfo) {
+    //   this.props.history.push({ pathname: "/LoginInterface" });
+    // }
+    // this.state.userInfo = JSON.parse(userInfo);
     this.getData();
   }
 
@@ -161,7 +165,7 @@ export default class data extends Component {
     const res = axios
       .get("http://localhost:8000/api/GetTeacherAssignmentList", {
         params: {
-          teacherID: this.state.userInfo.id,
+          teacherID: this.state.username,
           classID: this.state.classID,
         },
       })

@@ -42,16 +42,23 @@ const columns = [
 
 ];
 
+var id;
+
 const data = [
     {
         key: '1',
-        course_ID: '00000001',
+        course_ID: '0000000033',
         course_name: '软件工程基础',
         teacher_name: '王新宇',
         HWgrade:<Link to="/StudentCenter/HWanalysis">
         <Button>查看</Button>
         </Link>,
-        Quizgrade: <Link to="/StudentCenter/Quiz">
+        Quizgrade: <Link
+        to={{
+          pathname: "/StudentCenter/Quiz",
+          state: { username: id,classID: 1, name: '软件工程基础' },
+        }}
+      >
         <Button>查看</Button>
         </Link>,
         Examgrade:'100',
@@ -66,7 +73,12 @@ const data = [
         HWgrade:<Link to="/StudentCenter/HWanalysis">
         <Button>查看</Button>
         </Link>,
-        Quizgrade: <Link to="/StudentCenter/Quiz">
+        Quizgrade: <Link
+        to={{
+          pathname: "/StudentCenter/Quiz",
+          state: { username: id,classID: 2, name: '计算机组成' },
+        }}
+      >
         <Button>查看</Button>
         </Link>,
         Examgrade:'100',
@@ -80,7 +92,12 @@ const data = [
         HWgrade:<Link to="/StudentCenter/HWanalysis">
         <Button>查看</Button>
         </Link>,
-        Quizgrade: <Link to="/StudentCenter/Quiz">
+        Quizgrade: <Link
+        to={{
+          pathname: "/StudentCenter/Quiz",
+          state: { username: id,classID: 3, name: '数据库系统' },
+        }}
+      >
         <Button>查看</Button>
         </Link>,
         Examgrade:'100',
@@ -97,6 +114,9 @@ export default class Grade extends Component {
     state = {
       quiz:[],
       loading:true,
+    }
+    componentWillMount(){
+        id=this.props.location.state.username
     }
     async componentDidMount(){
         const res = await axios.get('http://localhost:8000/api/Grade');

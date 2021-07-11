@@ -67,7 +67,7 @@ const layout = {
 
 export default class Quiz extends Component {
   state = {
-    userInfo: {},
+    username:this.props.location.state.username ,
     classID: 0,
     quiz: [],
     loading: true,
@@ -86,9 +86,7 @@ export default class Quiz extends Component {
     this.state.className = this.props.location.state.name;
 
     let userInfo = sessionStorage.getItem("userInfo");
-    if (!userInfo) {
-      this.props.history.push({ pathname: "/LoginInterface" });
-    }
+    
     this.state.userInfo = JSON.parse(userInfo);
 
     this.getData();
@@ -101,7 +99,7 @@ export default class Quiz extends Component {
     axios
       .get("http://localhost:8000/api/Quiz", {
         params: {
-          id: this.state.userInfo.id,
+          id: this.state.username,
           classID: this.state.classID,
         },
       })
@@ -123,7 +121,7 @@ export default class Quiz extends Component {
     axios
       .get("http://localhost:8000/api/GetGradeInfo", {
         params: {
-          id: this.state.userInfo.id
+          id: this.state.username
         },
       })
       .then((response) => {

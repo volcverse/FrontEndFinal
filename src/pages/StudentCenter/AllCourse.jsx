@@ -53,7 +53,7 @@ const columns = [
         <Link
           to={{
             pathname: "/StudentCenter/MyAssignment",
-            state: { classID: record.ID, name: record.name },
+            state: { username: id,classID: record.ID, name: record.name },
           }}
           style={{ marginLeft: "4px", marginRight: "4px" }}
         >
@@ -62,7 +62,7 @@ const columns = [
         <Link
           to={{
             pathname: "/StudentCenter/Quiz",
-            state: { classID: record.ID, name: record.name },
+            state: { username: id,classID: record.ID, name: record.name },
           }}
         >
           查看测评
@@ -70,7 +70,7 @@ const columns = [
         <Link
           to={{
             pathname: "/StudentCenter/CourseResource",
-            state: { classID: record.ID, name: record.name },
+            state: { username: id,classID: record.ID, name: record.name },
           }}
           style={{ marginLeft: "4px" }}
         >
@@ -81,11 +81,17 @@ const columns = [
   },
 ];
 
+let id;
+
 export default class AllCourse extends Component {
   state = {
     course: [], //assignment数组
+    username:this.props.location.state.username,
     loading: true,
   };
+  componentWillMount(){
+    id=this.state.username;
+  }
   async componentDidMount() {
     const res = await axios.get("http://localhost:8000/api/AllCourse");
     //console.log(res.data.assignment);

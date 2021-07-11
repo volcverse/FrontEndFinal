@@ -111,7 +111,7 @@ const deleteData = (row) => {
 
 export default class PersonalResource extends Component {
   state = {
-    userInfo: {},
+    username: this.props.location.state.username,
     personalresource: [],
     loading: true,
     name: "",
@@ -125,11 +125,6 @@ export default class PersonalResource extends Component {
 
   componentDidMount() {
     _this = this;
-    let userInfo = sessionStorage.getItem("userInfo");
-    if (!userInfo) {
-      this.props.history.push({ pathname: "/LoginInterface" });
-    }
-    this.state.userInfo = JSON.parse(userInfo);
     this.getData();
   }
 
@@ -141,7 +136,7 @@ export default class PersonalResource extends Component {
     const res = axios
       .get("http://localhost:8000/api/StudentPersonalResource", {
         params: {
-          id: this.state.userInfo.id,
+          id: this.state.username,
           name: this.state.name,
         },
       })
@@ -164,7 +159,7 @@ export default class PersonalResource extends Component {
       method: "post",
       url: `http://127.0.0.1:8000/StudentPersonalDeleteResource`,
       data: {
-        id: this.state.userInfo.id,
+        id: this.state.username,
         name: row.Resource_name,
       },
     })
@@ -184,7 +179,7 @@ export default class PersonalResource extends Component {
       name: "file",
       className: "file-uploader",
       showUploadList: false,
-      data: { id: this.state.userInfo.id },
+      data: { id: this.state.username },
       action: "/api/StudentPersonalUploadResource",
       onChange({ file }) {
         const { status } = file;

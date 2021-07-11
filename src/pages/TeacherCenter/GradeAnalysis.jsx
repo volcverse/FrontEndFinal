@@ -6,6 +6,7 @@ import axios from "axios";
 const { Option } = Select;
 
 let _this;
+let username;
 
 const columns = [
   {
@@ -26,7 +27,7 @@ const columns = [
       <Link
         to={{
           pathname: "/TeacherCenter/HWanalysis",
-          state: { classID: record.ID, name: record.name },
+          state: { classID: record.ID, name: record.name,username },
         }}
       >
         <Button>查看</Button>
@@ -122,7 +123,7 @@ const data = [
     id: "M00002",
     name: "线性代数",
     hwgrade: (
-      <Link to="/TeacherCenter/HWanalysis">
+      <Link to={{ pathname: '/TeacherCenter/HWanalysis', state: { username} }}>
         <a>查看</a>
       </Link>
     ),
@@ -207,22 +208,26 @@ const data = [
   },
 ];
 
+
+
 export default class GradeAnalysis extends Component {
   state = {
     classID: 0,
-    teacherID: 0,
+    teacherID: this.props.location.state.username,
     data: [],
     loading: true,
   };
-
+  componentWillMount(){
+    username=this.props.location.state.username;
+  }
   componentDidMount() {
     _this = this;
 
-    let userInfo = sessionStorage.getItem("userInfo");
-    if (!userInfo) {
-      this.props.history.push({ pathname: "/LoginInterface" });
-    }
-    this.state.teacherID = JSON.parse(userInfo).id;
+    // let userInfo = sessionStorage.getItem("userInfo");
+    // if (!userInfo) {
+    //   this.props.history.push({ pathname: "/LoginInterface" });
+    // }
+    // this.state.teacherID = JSON.parse(userInfo).id;
 
     this.getData();
   }
