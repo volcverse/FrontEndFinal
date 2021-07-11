@@ -136,7 +136,7 @@ export default class onlineteststu extends React.Component {
           dataIndex: 'tid',
           width:'100%',
           render:text=>
-          <Card title={<div><DesktopOutlined />  <Link to={{pathname:"/StudentCenter/testcenter_stu/testpaper/",state:{eid:datasource[text]['eid']}}}>{datasource[text]['name']}</Link></div>} extra={<div><Tag color="blue">{datasource[text]['states']}</Tag></div>} style={{ marginRight: 0,marginLeft: 0 }}>
+          <Card title={<div><DesktopOutlined />  <Link to={{pathname:"/StudentCenter/testcenter_stu/testpaper/",state:{eid:datasource[text]['eid'],username:this.state.sid}}}>{datasource[text]['name']}</Link></div>} extra={<div><Tag color="blue">{datasource[text]['states']}</Tag></div>} style={{ marginRight: 0,marginLeft: 0 }}>
                     <div class='row1'><div>结束时间：{datasource[text]['time']}</div> <div style={{ textAlign:'right'}}><ReadOutlined /> {datasource[text]['course']}  &nbsp;&nbsp;&nbsp; <IdcardOutlined />{datasource[text]['teacher']}</div></div>
           </Card>
         },
